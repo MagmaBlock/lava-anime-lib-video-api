@@ -12,10 +12,9 @@ export const video = new Elysia({ prefix: "/video" })
     "/info",
     async ({ body, error }) => {
       try {
-        return await new Promise((resolve, reject) => {
+        return await new Promise<ffmpeg.FfprobeData>((resolve, reject) => {
           ffmpeg.ffprobe(body.url, (err, metadata) => {
             if (err) reject(err);
-
             // 直接返回完整的ffprobe元数据
             resolve(metadata);
           });
@@ -44,7 +43,6 @@ export const video = new Elysia({ prefix: "/video" })
 
         await new Promise((resolve, reject) => {
           ffmpeg(body.url)
-            .on("error", (err) => reject(err))
             .outputOptions([
               "-f",
               "image2",
@@ -59,9 +57,8 @@ export const video = new Elysia({ prefix: "/video" })
             .seekInput(body.seconds)
             .outputFormat("webp")
             .save(filename)
-            .on("end", () => {
-              resolve(null);
-            });
+            .on("error", (err) => reject(err))
+            .on("end", () => resolve(null));
         });
 
         // 将图片读取到内存并删除临时文件
