@@ -1,15 +1,21 @@
-# Elysia with Bun runtime
+# lava-anime-lib-video-api
 
-## Getting Started
-To get started with this template, simply paste this command into your terminal:
+## 部署
+
+本项目使用 [Bun](https://bun.sh) 开发，因此需要安装 Bun。
+
+1. 安装依赖：
+
 ```bash
-bun create elysia ./elysia-example
+bun install
 ```
 
-## Development
-To start the development server run:
+2. 启动服务：
+
 ```bash
-bun run dev
+bun start
 ```
 
-Open http://localhost:3000/ with your browser to see the result.
+## 文档
+
+API 文档在 `/docs` 上自动生成。
